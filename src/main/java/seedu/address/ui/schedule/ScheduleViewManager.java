@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.display.schedulewindow.PersonSchedule;
 import seedu.address.model.display.schedulewindow.PersonTimeslot;
@@ -21,14 +21,14 @@ import seedu.address.ui.schedule.exceptions.InvalidScheduleViewException;
  */
 public abstract class ScheduleViewManager {
 
-    protected static final Logger logger = LogsCenter.getLogger(ScheduleViewManager.class);
-    protected static Node placeholder;
+    protected static final Logger LOGGER = LogsCenter.getLogger(ScheduleViewManager.class);
+    protected static StackPane placeholder;
     protected ScheduleWindowDisplayType type;
     protected ScheduleView scheduleView;
     protected int weekNumber;
     protected LocalDate currentDate;
 
-    public static void setPlaceholder(Node node) {
+    public static void setPlaceholder(StackPane node) {
         placeholder = node;
     }
 
@@ -37,7 +37,7 @@ public abstract class ScheduleViewManager {
         ScheduleWindowDisplayType displayType = scheduleWindowDisplay.getScheduleWindowDisplayType();
 
         if (!isValidSchedules(scheduleWindowDisplay.getPersonSchedules())) {
-            logger.severe("Schedule given is invalid.");
+            LOGGER.severe("Schedule given is invalid.");
             throw new InvalidScheduleViewException("The schedule has clashes between events!");
         }
 
@@ -90,7 +90,14 @@ public abstract class ScheduleViewManager {
         return type;
     };
 
-    public abstract ScheduleView getScheduleView();
+    /**
+     * Method to remove bound container.
+     */
+    public void dismount() {
+        placeholder = null;
+    }
+
+    public abstract void updateScheduleView();
     public abstract void scrollNext();
     public abstract void toggleNext();
     public abstract void filterPersonsFromSchedule(List<Name> persons);

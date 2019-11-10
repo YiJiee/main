@@ -3,10 +3,8 @@ package seedu.address.ui.schedule;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.display.schedulewindow.FreeSchedule;
 import seedu.address.model.display.schedulewindow.MonthSchedule;
 import seedu.address.model.display.schedulewindow.PersonSchedule;
@@ -36,7 +34,7 @@ public class GroupScheduleViewManager extends ScheduleViewManager {
         super.weekNumber = 0;
         super.currentDate = LocalDate.now();
         super.type = ScheduleWindowDisplayType.GROUP;
-        super.logger.info("Generating schedule view for " + groupName.toString() + ".");
+        super.LOGGER.info("Generating schedule view for " + groupName.toString() + ".");
     }
 
     /**
@@ -93,9 +91,10 @@ public class GroupScheduleViewManager extends ScheduleViewManager {
     }
 
     @Override
-    public ScheduleView getScheduleView() {
+    public void updateScheduleView() {
         update();
-        return super.scheduleView;
+        placeholder.getChildren().clear();
+        placeholder.getChildren().add(scheduleView.getRoot());
     }
 
     @Override

@@ -323,7 +323,7 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isToggleNextWeek()) {
                 scheduleViewManager.toggleNext();
-                handleChangeOnDetailsView(scheduleViewManager.getScheduleView().getRoot());
+                scheduleViewManager.updateScheduleView();
                 return commandResult;
             }
 
@@ -338,7 +338,7 @@ public class MainWindow extends UiPart<Stage> {
                             scheduleWindowDisplay.getFilteredNames().get(), scheduleWindowDisplay.getGroupDisplay(),
                             ColorGenerator::generateColor).getRoot(), SidePanelDisplayType.GROUP);
                     scheduleViewManager.filterPersonsFromSchedule(scheduleWindowDisplay.getFilteredNames().get());
-                    handleChangeOnDetailsView(scheduleViewManager.getScheduleView().getRoot());
+                    scheduleViewManager.updateScheduleView();
                 }
                 return commandResult;
             }
@@ -372,7 +372,7 @@ public class MainWindow extends UiPart<Stage> {
             switch (displayType) {
             case PERSON:
                 //There is only 1 schedule in the scheduleWindowDisplay
-                handleChangeOnDetailsView(scheduleViewManager.getScheduleView().getRoot());
+                scheduleViewManager.updateScheduleView();
                 handleSidePanelChange(
                         new PersonDetailCard(scheduleWindowDisplay
                                 .getPersonSchedules()
@@ -381,7 +381,7 @@ public class MainWindow extends UiPart<Stage> {
                                 .getRoot(), SidePanelDisplayType.PERSON);
                 break;
             case GROUP:
-                handleChangeOnDetailsView(scheduleViewManager.getScheduleView().getRoot());
+                scheduleViewManager.updateScheduleView();
                 handleSidePanelChange(new GroupInformation(scheduleWindowDisplay.getPersonDisplays(), null,
                                 scheduleWindowDisplay.getGroupDisplay(), ColorGenerator::generateColor).getRoot(),
                         SidePanelDisplayType.GROUP);
